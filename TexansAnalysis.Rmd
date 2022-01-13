@@ -1,0 +1,896 @@
+---
+title: "Hannon- Texans Analysis"
+author: "David Hannon"
+date: "12/4/2021"
+output:
+  html_document: default
+  pdf_document: default
+theme: cayman
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Analysis Results- Texans vs. Jaguars Week 15 {.tabset}
+
+Intro: The following analysis covers 3rd Down Tendencies, RedZone Tendencies, key matchups and a final score prediction for the 2021 Week 15 Matchup between the Houston Texans and Jacksonville Jaguars. The tabs separate different pieces, broken down by visualizations and models.
+
+The visualizations created using Tableau are meant to be easily shared and filtered with all personnel for quick understanding of tendencies while the models created could be used live, in-game to predict outcomes such as our expected yardage based on a specific play call or anticipating Jacksonville's next play call based on the situation.
+
+For most visualizations- the 2021 season data was the focus as both teams have fairly new looks to them this year, however to get sufficient sample sizes for some of the models, 2021, 2020, and also some 2019 data was used.  
+
+Key: 3DA- 3rd Down Analysis, RZA- Redzone Analysis, MU- Matchup Analysis
+
+Please use the clickable tabs below to navigate the various parts of the analysis. 
+
+## 3DA- Visualizations
+
+The following dashboards breakdown both Houston and Jacksonville 3rd down rushing and passing effectiveness from their game against eachother in week 1.
+The filters on the dashboards allow us to easily change the scope to see Hou or Jax offense vs. any and all defenses, look at either defense vs any and all offense, change the down, look at a specific QB or RB rather than all, and add in data from the 2020 and 2019 seasons as well.
+I will focus mainly on our Week 1 game vs the Jags and 2021 overall 3D offense. 
+
+Note: The data used for these is accurate as of Week 13, 2021. Normally we would be able to have these dashboards update live with the data (especially if its all integrated in Wyn), but that is not the case here in order to keep my written observations consistent with what is shown. 
+
+### Houston 3rd Down Rushing Dashboard
+
+For the following analysis, please ensure the following filters are set to:
+Rusher:(All), Defteam: JAX, Posteam: HOU, Year: 2021, Play Type: run, Down: 3, Game Half: (All)
+
+<iframe align = "center" width = "1000" height = "857" src="https://public.tableau.com/views/HoustonRushing/Hou3rdDownRushing2?:language=en-US&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+#### Observations:
+
+* Against Jacksonville in week 1, 2021- We converted 50% of our 6 3rd down rush attempts. 
+* The Yds To Go -> Conversion graph shows a spread of the Yds to Go with Yards gained so anything on or above the line y=x is converted.
+* This shows that we converted on runs with up to 5 yds to gain and failed on a 3rd and 1. 
+* The RushYds/Location graph shows our most effective 3D runs were to the outside left, converting both attempts to the left end and left tackle gap. 
+* The Avg. EPA/WPA shows how these runs affected the bigger picture of the overall drive and overall game, with the left end run adding 3.715 Expected Points to its respective drive (due to the 29 yd game) and the left tackle run increasing our win probability by 1.7% (since it resulted in a TD)
+
+Adding In 2020 Data:
+
+* We have been highly effective converting 3D rushes against the Jaguars (67%) but there is a ceiling of 5 yards to go as we failed both attempts longer than this (11 and 12 yards) 
+* Outside rushes to the left still appear to be the most effective (100%) with some added effectivenss to inside rushes (80% conversion rate)
+
+Refocus on just 2021 against (All) Defenses:
+
+* The bigger picture shows we have not converted a 3D rush greater than 9 yards this season
+* Our most effective 3D rushes this season are not just outside left, but outside in general (100% off left end and 75% off right end)
+* Outside runs on 3rd Down also add the most to the EP for the drive and biggest increase to overall WP
+
+### Houston 3rd Down Passing Dashboard
+
+For the following analysis, please ensure the following filters are set to:
+Receiver:(All), Defteam: JAX, Posteam: HOU, Year: 2021, Play Type: pass, Down: 3, Game Half: (All)
+
+<iframe align = "center" width = "1000" height = "857" src="https://public.tableau.com/views/HoustonPassing/Hou3rdDownPassing?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+#### Observations
+
+* Against Jacksonville in week 1, 2021- We converted 60% of our 15 3rd down pass attempts.
+* Yds To Go -> Conversion: we exploded for 2 big plays on 3rd and 1 and another on 3rd and 9 but fairly even split of converting/not for all other plays
+* PassYds/Location: Despite the most yards coming from passes deep middle, the highest conversion rate came from passes short right (71%)
+* The EPA/WPA graph adds another neat insight- that while these long deep middle passed added to the EP for the drive, they did not affect the WP much and in fact, the most effective big picture plays were deep left, adding an average of 1.348 EP and 7.6% to WP (due to scoring play)
+
+Adding in 2020 data:
+
+* Shows a dropoff in overall conversion rate but highlights a few more huge boom plays gained by passing on 3rd down. 
+* Passing deep across the middle of the field now shows as the most effective for converting but utilizing the right side of the field still has a conversion rate around 50% with a huge share of the sample coming from short right passes. 
+
+Refocusing on 2021 and changing Defteam to (All):
+
+* There has been a dropoff in 3rd down pass conversion rate since week 1, overall averaging 36.8% on 125 attempts.
+* Yds To Go Graph: Shows a pretty random spread with our furthest passing conversion coming on 3rd and 13
+* PassYds/Location: Shows big gains averaged from passes deep middle and deep right with very effective with fairly good conversion rates when going to either of these locations as well as short left and short right.
+* The NA bar here represents sacks- 11.2% of 3rd down pass attempts have resulted in sacks
+* The EPA/WPA graph: 3D passes deep right and deep middle add the most expected points to the overall drive with only the deep right passes incresing the WP as well 
+
+
+### Jacksonville 3rd Down Rushing Dashboard
+
+For the following analysis, please ensure the following filters are set to:
+Rusher:(All), Defteam: HOU, Posteam: JAX, Year: 2021, Play Type: run, Down: 3, Game Half: (All)
+
+<iframe align = "center" width = "1000" height = "857" src="https://public.tableau.com/views/JacksonvilleRushing/Jax3rdDownRushing?:language=en-US&:retry=yes&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+#### Observations
+
+* Jax only ran 1 3rd down rush against us in Week 1: A 6 yd conversion by Carlos Hyde to the right guard gap. 
+
+Adding in 2020 data:
+
+* Still a small sample size- only 5 total 3rd down runs across 3 games against us
+* These 5 runs have been effective though- converting 4 of the 5, with all gaps averaging positive EPA
+
+Refocusing on 2021 and changing Defteam to (All):
+
+* Jax has converted 55.56% of 27 3D rushes this season
+* The Yds To Go -> Conversion graph highlights that all of these rushes have come on 3rd and 3 or shorter
+* The RushYds/Location graph shows that 12 of these rushes have been up the middle for an average of 5 yards, converting 58%, as well as converting over 50% on all runs to the right and 100% on all 3 runs to the left tackle
+* Runs off of either side tackle are the only 3D rush type that increases both Jacksonville's EP and WP, with right tackle showing the greatest increase in both
+
+### Jacksonville 3rd Down Passing Dashboard
+
+For the following analysis, please ensure the following filters are set to:
+Receiver:(All), Defteam: HOU, Posteam: JAX, Year: 2021, Play Type: pass, Down: 3, Game Half: (All)
+
+<iframe align = "center" width = "1000" height = "857" src="https://public.tableau.com/views/JaxPassing/Hou3rdDownPassing?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+#### Observations
+
+* Against us Week 1, Jacksonville converted 20% on 10 3rd down pass attempts: 15 yard pass short right on 3rd and 6 and a 27 yard pass deep middle on 3rd and 17
+* Only 2 conversions is not really a big enough sample for deeper analysis
+
+I will forego analyzing 2020 passing data as the Jaguars have a new QB, coach, and new OC.
+
+Changing Defteam to (All):
+
+* Jax only converts 28.7% of 3rd down pass attempts (108 attempts this season)
+* The spread of the Yds To Go->Conversion graqph is fairly random but does highlight Jacksonville's effectiveness on 3rd and long, showing a fairly even split on attempts where Ydstogo is greater than 10
+* Jacksonville's most effective 3rd down plays tend to use the middle of the field. converting 50% on deep middle passes and 45% on short middle passes
+* They have also converted 44% when targeting deep right
+
+Big Takeaway for Jax 3D Offense: Despite the majority of 3rd down passes targeting short, they have been highly efficient in both yardage and conversion rate when they take a deep shot on 3rd down. They have also been most efficeint when they use the middle of the field. While this efficiency is most attributed to passing, putting an extra linebacker with good coverage speed in the middle seems like the best startegy to neutralize either the middle run of short middle pass.  
+
+###### Proceed to next tab by scrolling back to top of page
+
+## Packages and Data Upload- Skip
+
+Setup of packages used for all modelling
+```{r, message=FALSE, warning=FALSE}
+#install.packages("nflfastR")
+#install.packages("scales")
+#install.packages("RSQLite")
+#install.packages("DT")
+#install.packages("randomForest")
+#install.packages("caret")
+library("dplyr")
+library("plyr")
+library("ggplot2")
+library("randomForest")
+library(scales)
+library(arules)
+require("caTools")
+library("caret")
+library("tidyr")
+library("DT")
+library("e1071")
+library("neuralnet")
+library("knitr")
+devtools::install_github("rstats-db/RSQLite")
+3
+devtools::install_github("kassambara/ggpubr")
+3
+library("ggpubr")
+library(DBI)
+con <- dbConnect(RSQLite::SQLite(), ":memory:")
+library("sqldf")
+```
+
+Add NFL play by play data found via NFLfastR
+```{r, warning=FALSE}
+setwd("C:/Datasets/Texans")
+df<-read.csv(file="2019_2021AllNFLPlays.csv", head=TRUE, sep=",")
+dbWriteTable(con, "NFLDATA", df)
+```
+
+###### Proceed to next tab by scrolling back to top of page
+
+## 3DA- LinReg Model of Hou Expected Yards
+
+### Linear Regression Model- Predict Expected Yards for Given Play Call (Pre-Snap)
+
+To assist with 3D offensive play calling, I created a linear regression model to predict Houston's expected yardage based on opponent, time remaining/quarter,field position, yards to go for 1st, shotgun formation, and most importantly- the overall play call (type with location).
+
+The idea here is to have an equation that inputs the live, in-game situation data and then outputs expected yardage for each play type to assist the offensive strategy. 
+
+Several other models were created with different combinations of variables but this is the best output in terms of r squared and insight. 
+
+### Step 1. Pull Desired Data
+```{r, warning=FALSE}
+#Desired dataset- every Houston 3rd down play over the last 3 years
+#Exclude OT (not enough data to be placed in both training and test set)
+HouLinReg<- dbFetch(dbSendQuery(con, "SELECT * from NFLDATA 
+                                WHERE posteam='HOU' AND down=3 
+                               AND play_type IN('pass','run')
+                               AND year IN (2020,2021)
+                                AND qtr IN(1,2,3,4)"))
+```
+
+### Step 2. Data Preprocessing
+```{r, warning=FALSE}
+#Combine play type with location and either pass length or run gap and factorize categoricals
+HouLinReg$OvrPlay<- ifelse(HouLinReg$play_type=='pass', paste(HouLinReg$play_type,HouLinReg$pass_length,HouLinReg$pass_location),
+                             paste(HouLinReg$play_type, HouLinReg$run_location,HouLinReg$run_gap))
+HouLinReg$OvrPlay<-as.factor(HouLinReg$OvrPlay)
+HouLinReg<-subset(HouLinReg, OvrPlay!="run NA NA")
+HouLinReg$qtr<-as.factor(HouLinReg$qtr)
+HouLinReg$defteam<-as.factor(HouLinReg$defteam)
+HouLinReg$year<-as.factor(HouLinReg$year)
+```
+
+### Step 3. Build The Model
+```{r, warning=FALSE}
+#Split data into training and test sets
+set.seed(1234)
+ind <- sample(2, nrow(HouLinReg), replace = TRUE, prob = c(0.7, 0.3))
+train.HouLin <- HouLinReg [ind == 1, ]
+test.HouLin <- HouLinReg [ind == 2, ]
+
+#Create model
+myFormula<-yards_gained~year+defteam+game_seconds_remaining+goal_to_go+
+  ydstogo+yardline_100+OvrPlay+shotgun
+
+model1<-lm(myFormula, data=train.HouLin)
+summary(model1)
+```
+
+### Coefficient Analysis
+
+* The (Intercept) estimate sets a baseline of 7.444 yards per play that will either be increased or decreased depending on the values of the other variables- Note that this is not stating that we expect 7-8 yards on every play since most other variables seem to subtract from this.  
+* A coefficient for each opponent's defense was also calculated to either increase or decrease the expected yards:
+  + The stars or dots at the end of the rows add a bit more confidence to the estimate for those defenses (higher significance levels)
+  + The standard error is fairly high for most teams, showing that this varies a bit per play
+* The OvrPlay rows list the different possibilities for play calls along with their coefficients
+  + All except pass deep middle show negative coefficients, most show high significance levels
+  + The quantity of negative coefficients are okay as they just add to the total overall estimate with the expected value added by the other variables- the end prediction will still be a positive number
+  + While this model will always say that a pass to the deep middle is the "best" play call, we obviously cannot do that every third down
+  + The value of this model would be to compare the expected value for all play types and compare it with the YardsToGo- if the model ouput is greater than that is a viable play call for the situation
+  
+Essentially what can be done with this model would be get these coefficient values in an excel sheet or something similar, then input the opponent, time remaining, goal to go, yds to go, and yardline and it would output an expected yards gained for each listed play type either from a shotgun or non-shotgun formation. 
+
+### Step 4. Assess Model on Test Data
+
+```{r, warning=FALSE}
+pred1<- predict(model1, newdata=test.HouLin)
+plot(test.HouLin$yards_gained, pred1, xlab = "Observed", ylab = "Prediction")
+abline(a = 0, b = 1)
+```
+
+
+Testing the model on new data (not used in the model training), results in the above relationship between observed yards gained and predicted yards gained
+
+* Data points that fall on or near the solid line y=x represent accurate predictions
+* Regarding Outliers- With the available data, a model that could predict huge boom plays (the data points to the right- gains of 40+ yards) is not realistic
+* Also the vertical line above Observed=0 mostly represent incompletions which will throw of the trend line but are still important in factoring in for expected yards gained
+* Ignoring the boom plays and incompletions, the data does seem to cluster around the trend line- adding confidence to the model's predictions
+
+### Output Analysis
+```{r, warning=FALSE}
+plot(model1)
+```
+
+The above graphs are mostly for me as the modeller to ensure my model is appropriate for the data and likely would not be shared with coaches or players.
+The Residuals vs Fitted showcases the high outliers mentioned (boom plays) which could be ommitted but I decided to keep for the best calculation of avg yards per play type.
+The Normal Q-Q shows that most of our outliers follow a normal distribution with just these same few high outliers slightly throwing things off.
+And these same outliers appear in both the Scale-Location and Residuals vs Leverage but not at such an alarming distance to change my model again. 
+
+
+###### Proceed to next tab by scrolling back to top of page
+
+## 3DA- RandForest Jacksonville Play Calling
+
+### Random Forest Model- Predicting Jacksonville's Next Play Call
+
+To assist with our defensive play calling, I utilized Jacksonville's 3rd Down play calls this season to create a predictive model of what play type and location they will use in each situation. 
+
+For the purpose of this overall model- pass length and run gap are skipped as that would be too many categorical outcomes to predict- so there are 6 possible outcomes-  pass left, pass middle, pass right, run left, run middle, and run right. (A follow up model could be done to supplement after predicting pass-> predict depth or after predicting run-> predict the gap.)
+
+With 6 possible outcomes- a prediction accuracy of 16.67% is the minimum baseline. 
+
+To ensure good sample size for this model type, 3 years worth of data are included (we need plenty of observations of each specific play type). 
+
+### Step 1. Pull the Desired Data
+```{r, warning=FALSE}
+#Use RSQLLite to get desired data
+JaxPlayCall<- dbFetch(dbSendQuery(con, "SELECT posteam, game_seconds_remaining,
+                                yardline_100, down, ydstogo, shotgun,
+                                score_differential, play_type, run_location, pass_location, goal_to_go
+                                FROM NFLDATA WHERE posteam='JAX' AND down==3
+                                AND play_type IN ('run','pass')"))
+```
+
+### Step 2. Data Preprocessing
+```{r, warning=FALSE}
+#create single column of play type and location to eliminate NA's
+JaxPlayCall$OvrPlay<- ifelse(JaxPlayCall$play_type=='pass', paste(JaxPlayCall$play_type,JaxPlayCall$pass_location),
+                             paste(JaxPlayCall$play_type, JaxPlayCall$run_location))
+
+JaxPlayCall$OvrPlay<-as.factor(JaxPlayCall$OvrPlay)
+JaxPlayCall<-subset(JaxPlayCall, select=-c(play_type,run_location,pass_location,posteam,down))
+JaxPlayCall<-subset(JaxPlayCall,OvrPlay!="pass NA" & OvrPlay!="run NA")
+
+#Change to appropriate data types for random forest modelling
+JaxPlayCall$shotgun<-as.factor(JaxPlayCall$shotgun)
+JaxPlayCall$goal_to_go<-as.factor(JaxPlayCall$goal_to_go)
+JaxPlayCall$game_seconds_remaining<-discretize(JaxPlayCall$game_seconds_remaining, breaks=20)
+JaxPlayCall$yardline_100<-discretize(JaxPlayCall$yardline_100, breaks=10)
+JaxPlayCall$ydstogo<-discretize(JaxPlayCall$ydstogo, breaks=5)
+```
+
+
+To set a new baseline for correct playcall prediction- we can look at Jacksoville's actual 3rd down playcall spread.
+
+```{r, warning=FALSE}
+Percentages<- table(JaxPlayCall$OvrPlay)/length(JaxPlayCall$OvrPlay)*100
+show(Percentages)
+```
+
+This shows that the highest play call % is a pass right 32.1% of the time, therefore we COULD expect to be correct 32.1% of the time if we always anticipate a pass right (we obviously do not want to always predict the same play though).
+
+If we train a model that can correctly predict greater than 32.1%, we can improve defensive play calling and anticipation.
+
+### Step 3. Build the Model
+```{r, warning=FALSE}
+JaxPlayCall<-droplevels(JaxPlayCall)
+
+set.seed(1234)
+ind <- sample(2, nrow(JaxPlayCall), replace = TRUE, prob = c(0.7, 0.3))
+train.JaxPlayCall <- JaxPlayCall [ind == 1, ]
+train.JaxPlayCall<-droplevels((train.JaxPlayCall))
+test.JaxPlayCall <- JaxPlayCall [ind == 2, ]
+test.JaxPlayCall<-droplevels((test.JaxPlayCall))
+
+rf<-randomForest(OvrPlay~., data=train.JaxPlayCall, ntree=600, importance=TRUE)
+rf
+```
+
+Briefly looking at the confusion matrix- we can look down the diagonal to see correctly predicted plays. There does seem to be a shape to the misclassifications, with most passes being misclassified as just a different direction of pass. This hints that if I were to simplify this model down to just predicting pass/run, it would be very strong. 
+
+### Step 4. Assess the Model on Test Data
+```{r, warning=FALSE}
+pred=predict(rf, newdata = test.JaxPlayCall[-7])
+
+cm=table(test.JaxPlayCall[,7],pred)
+
+cm
+```
+
+### Results
+
+Testing the optimized number of trees- the best prediction accuracy came from ntree=600 (default is 500).
+
+Due to the nature of bootstrapping with Random Forest Models- a new random model is created each time meaning the output differs and what I have run on my end will be slightly different than what you see on your end.
+
+I ran the model roughly 15 times and have gotten prediction accuracies ranging from 34% to 39% (calculated by adding the diagonal values where pred=observed and divinding by 156, the number of values in the test set)- with the model averaging 35.2% accuracy (55 of 156 correct).
+This does improve upon both the 16.67% baseline accuracy and the 32.1% contextual accuracy. While it is only a 3% increase over contextual, it also eliminates the need to anticipate the same play call every time, making the model prediction much stronger. With a bit better data than what is free to me online, I believe I could further improve this accuracy if I had variables such as offensive formation and maybe even include personnel on the field.
+
+
+###### Proceed to next tab by scrolling back to top of page
+
+## RZA- Drive Results/Expected Points
+
+### Redzone Efficiency-
+For my first redzone visualization, I want to showcase the result of all redzone trips for both teams, for both this season and over the last several seasons. I decided to do this using ggplot rather than Tableau since RSqlLite allowed me to group my individual play data by drive. I also would be able to hide all of this code if sharing with coaches but figured it was important to include for this project.
+
+### Houston Redzone results 2020-2021
+```{r, warning=FALSE}
+RedZoneResults<- dbFetch(dbSendQuery(con, "SELECT year, posteam, defteam, drive, fixed_drive_result
+                              FROM NFLDATA WHERE posteam IN ('HOU','JAX')
+                              AND drive_inside20=1
+                              AND year IN (2020,2021)
+                              GROUP BY posteam, defteam, drive, fixed_drive_result
+                              ORDER BY year"))
+
+#Houston Redzone results 2020-2021
+dbWriteTable(con, "RZResult", RedZoneResults, overwrite=TRUE)
+RedZoneResultsHou<- dbFetch(dbSendQuery(con, "SELECT posteam, fixed_drive_result, count(fixed_drive_result) AS n, sum(count(fixed_drive_result)) over() AS Total
+                              FROM RZResult
+                              WHERE posteam=='HOU'
+                              GROUP BY posteam, fixed_drive_result"))
+RedZoneResultsHou$Pct<-percent(RedZoneResultsHou$n/RedZoneResultsHou$Total)
+head(RedZoneResultsHou,10)
+```
+
+
+```{r, warning=FALSE}
+RedZoneResultsHou$Pct<-as.numeric(sub("%", "", RedZoneResultsHou$Pct))
+
+A<-ggplot(RedZoneResultsHou, aes(x=reorder(fixed_drive_result, -Pct),y=Pct))+
+  geom_bar(stat="identity", color="red", fill="darkblue")+
+  xlab("Drive Result")+
+  ylab("Percentage")+
+  ggtitle("Houston Red Zone Trips- 2020-2021")
+```
+
+
+### Houston Redzone Results 2021
+```{r, warning=FALSE}
+RedZoneResultsHou2021<- dbFetch(dbSendQuery(con, "SELECT posteam, fixed_drive_result, count(fixed_drive_result) AS n, sum(count(fixed_drive_result)) over() AS Total
+                              FROM RZResult
+                              WHERE posteam=='HOU'
+                              AND year=2021
+                              GROUP BY posteam, fixed_drive_result"))
+RedZoneResultsHou2021$Pct<-percent(RedZoneResultsHou2021$n/RedZoneResultsHou2021$Total)
+head(RedZoneResultsHou2021)
+```
+
+
+```{r, warning=FALSE}
+RedZoneResultsHou2021$Pct<-as.numeric(sub("%", "", RedZoneResultsHou2021$Pct))
+
+B<-ggplot(RedZoneResultsHou2021, aes(x=reorder(fixed_drive_result, -Pct),y=Pct))+
+  geom_bar(stat="identity", color="red", fill="darkblue")+
+  xlab("Drive Result")+
+  ylab("Percentage")+
+  ggtitle("Houston Red Zone Trips- 2021")
+```
+
+
+### Jax Redzone Results 2020-2021
+```{r, warning=FALSE}
+RedZoneResultsJax<- dbFetch(dbSendQuery(con, "SELECT posteam, fixed_drive_result, count(fixed_drive_result) AS n, sum(count(fixed_drive_result)) over() AS Total
+                              FROM RZResult
+                              WHERE posteam=='JAX'
+                              GROUP BY posteam, fixed_drive_result"))
+RedZoneResultsJax$Pct<-percent(RedZoneResultsJax$n/RedZoneResultsJax$Total)
+head(RedZoneResultsJax)
+
+RedZoneResultsJax$Pct<-as.numeric(sub("%", "", RedZoneResultsJax$Pct))
+
+C<-ggplot(RedZoneResultsJax, aes(x=reorder(fixed_drive_result, -Pct),y=Pct))+
+  geom_bar(stat="identity", color="gold", fill="darkcyan")+
+  xlab("Drive Result")+
+  ylab("Percentage")+
+  ggtitle("Jacksonville Red Zone Trips- 2020-2021")
+```
+
+
+### Jax Redzone Results 2021
+```{r,warning=FALSE}
+RedZoneResultsJax2021<- dbFetch(dbSendQuery(con, "SELECT posteam, fixed_drive_result, count(fixed_drive_result) AS n, sum(count(fixed_drive_result)) over() AS Total
+                              FROM RZResult
+                              WHERE posteam=='JAX'
+                              AND year=2021
+                              GROUP BY posteam, fixed_drive_result"))
+RedZoneResultsJax2021$Pct<-percent(RedZoneResultsJax2021$n/RedZoneResultsJax2021$Total)
+head(RedZoneResultsJax2021)
+
+```
+
+```{r, warning=FALSE}
+RedZoneResultsJax2021$Pct<-as.numeric(sub("%", "", RedZoneResultsJax2021$Pct))
+
+D<-ggplot(RedZoneResultsJax2021, aes(x=reorder(fixed_drive_result, -Pct),y=Pct))+
+  geom_bar(stat="identity", color="gold", fill="darkcyan")+
+  xlab("Drive Result")+
+  ylab("Percentage")+
+  ggtitle("Jacksonville Red Zone Trips- 2021")
+
+
+ggarrange(A, B, C, D, ncol=2, nrow=2)
+```
+
+The group of graphs above show that Jacksonville has been a bit more efficient scoring touchdowns in the redzone than us this year, finding the endzone 56% of the time compared to our 50%. However we are able to somewhat make up for this by scoring a field goal 38.5% of the time compared to Jacksonville's 20%.
+
+### Houston Expected RedZone Points 2021: .5(7) + .385(3)= 4.655 Points
+
+### Jacksonville Expected RedZone Points 2021: .56(7) + .2(3)= 4.52 Points
+
+
+###### Proceed to next tab by scrolling back to top of page
+
+## RZA- Playcalling
+
+Focus: Just 2021 redzone play calls
+
+### Redzone Playcall Tendencies
+
+For my next visualization, I wanted a simple breakdown of basic redzone play call tendencies for both teams to lead into a predictive model of Jacksonville's playcall tendencies. The counts of each for each team are also listed in the chart. 
+```{r, warning=FALSE}
+RedZone<- dbFetch(dbSendQuery(con, "SELECT posteam, play_type, count(play_type) AS Count
+                              FROM NFLDATA WHERE posteam IN ('HOU','JAX')
+                              AND drive_inside20=1
+                              AND play_type IN ('pass','run','field goal')
+                              AND year=2021
+                              GROUP BY posteam, play_type"))
+head(RedZone)
+ggplot(RedZone, aes(x=posteam, y=Count, fill=play_type))+
+  geom_bar(stat="identity", position=position_dodge())+
+  xlab("Possession Team")+
+  ggtitle("RedZone Play Call Breakdown")
+```
+
+
+In the RedZone (barring field goals, kneeldowns, etc.):
+
+Houston passes 53.5% of the time and runs 46.5% (compared to 58.6% pass and 41.4% overall).
+
+Jacksonville passes 56.6% and runs 43.4% in the RedZone (compared to 62.6% pass and 37.4% run overall)
+
+I also wanted a visualization to breakdown redzone touchdown plays by play type. 
+```{r, warning=FALSE}
+RedZoneTD<- dbFetch(dbSendQuery(con, "SELECT posteam, play_type, count(play_type) AS Count
+                              FROM NFLDATA WHERE posteam IN ('HOU','JAX')
+                              AND drive_inside20=1
+                              AND play_type IN ('pass','run','field goal')
+                              AND year=2021
+                              AND touchdown=1
+                              GROUP BY posteam, play_type"))
+head(RedZoneTD)
+ggplot(RedZoneTD, aes(x=posteam, y=Count, fill=play_type))+
+  geom_bar(stat="identity", position=position_dodge())+
+  xlab("Possession Team")+
+  ggtitle("RedZone TDs by Play Type")
+```
+
+Of Redzone TDs:
+
+Houston- 53.8% Pass and 46.2% Rush
+
+Jacksonville- 35.7% Pass and 64.3% Rush
+
+Interesting that despite such a higher percent of passing plays, the majority of Jacksonville's scores come via rushing.
+
+
+###### Proceed to next tab by scrolling back to top of page
+
+## RZA- LogReg Houston TD PlayCall Model
+
+### Logistic Regression- Predict Which Playcall Will Result in a Houston TD
+
+To utilize some binary classification modelling techniques, I wanted to create a predictive model that would predict if our next redzone play would result in a TD (1=yes, 0=no) given several pre-play factors including the play call (simplified).
+
+### Step 1. Pull the desired data
+```{r, warning=FALSE}
+HouRedZone<-dbFetch(dbSendQuery(con, "SELECT posteam, defteam, yardline_100, game_seconds_remaining,
+                              down, goal_to_go, ydstogo, play_type, shotgun, pass_length, pass_location, 
+                              run_location, run_gap, touchdown
+                              FROM NFLDATA WHERE posteam='HOU'
+                              AND drive_inside20=1
+                              AND yardline_100<21
+                              AND play_type IN ('pass','run')"))
+head(HouRedZone)
+```
+
+
+### Step 2. Data Pre-Processing
+For this type of modelling, I need the character variables changed to factors and also needed to combine the play call columns into one to eliminate NAs.
+
+I also ended up eliminating the "down" variable as it reduced the accuracy of the model.
+
+```{r, warning=FALSE}
+HouRedZone$OvrPlay<- ifelse(HouRedZone$play_type=='pass', paste(HouRedZone$play_type,HouRedZone$pass_length, HouRedZone$pass_location),
+                             paste(HouRedZone$play_type, HouRedZone$run_location, HouRedZone$run_gap))
+HouRedZone$OvrPlay<-as.factor(HouRedZone$OvrPlay)
+HouRedZone<-subset(HouRedZone, select=-c(play_type,run_location,run_gap,
+                                         pass_location,pass_length,posteam,defteam,down))
+
+HouRedZone$goal_to_go<- as.factor(HouRedZone$goal_to_go)
+HouRedZone$shotgun<-as.factor(HouRedZone$shotgun)
+```
+
+
+### Step 3. Build The Model
+
+```{r, warning=FALSE}
+set.seed(1234)
+ind <- sample(2, nrow(HouRedZone), replace = TRUE, prob = c(0.7, 0.3))
+train.data <- HouRedZone [ind == 1, ]
+test.data <- HouRedZone [ind == 2, ]
+
+LogModel<- glm(touchdown~., family=binomial, data=train.data)
+
+summary(LogModel)
+```
+
+In the above model, we can see a breakdown of the coefficients for each variable as well as significance.
+
+For logistic regression, these estimates represent a change in the exponents used to calculate the probability of a TD occuring, so positive values show increased probability while negative values decrease the probability. The nature of this model starts with a positive intercept and decreases the likelihood based on the other variables (excpet shotgun and seconds remaining, which both had positive coefficients). Note that this positive intercept does not imply high probability of scoring on every play as the estimate will be adjusted by the input variable son every play.
+
+
+### Step 4. Assess based on Training Data
+
+```{r, warning=FALSE}
+#A look at what the predicted probabilities look like for the 1st 10 plays.
+LogModel$fitted.values[1:10]
+
+table(round(predict(LogModel, train.data, type="response")), train.data$touchdown)
+
+### 83% accurate- 2021 scored on 6.5% of redzone plays 
+### 21 correctly predicted scores out of 263 plays= 8%
+```
+Out of 263 total plays in the training data, it correctly classified 198 non-TD plays and 21 TD plays => 83% accuracy
+
+Specifically on scoring plays, it identified 21/53 => 39.6%
+
+### Step 5. Assess based on Test Data
+
+```{r, warning=FALSE}
+mypredictions<-round(predict (LogModel, test.data, type="response"))
+table(mypredictions, test.data$touchdown)
+```
+
+Out of 110 plays in the test set, the model correctly identified 79 non-scoring pplays and 8 scoring plays => 79% accuracy
+
+Specifically, on actual scoring plays, it identified 8/24 => 33.3%
+
+However: When this model predicts a score, it was correct 53.3%. 
+
+The following residual plot is just a check from the modeller's perspective to see the fit. The sharpness of the black line (which is usually a smooth curve) raises 2 concerns for this model: sample size was too small (not enough TDs to identify) and also that the variable of yds_to_go may have had too much influence since TD% at the 1 yd line is much greater than at the 20 yd line. 
+```{r, warning=FALSE}
+plot(predict(LogModel),residuals(LogModel), col=c("blue"))
+lines(lowess(predict(LogModel),residuals(LogModel)), col=c("black"), lwd=2)
+abline(h=0, col="grey")
+```
+
+
+
+### Compare to Naive Bayes
+I usually like to combine my logistic regression models with naive bayes classification to seek improvement- and I like the insights provided by the variable by variable breakdown.
+
+***Please scroll past the games seconds remaining bins- made 200 bins for 18 seconds each
+
+```{r, warning=FALSE}
+HouRedZone$yardline_100<-discretize(HouRedZone$yardline_100, "frequency", breaks=8)
+HouRedZone$game_seconds_remaining<-discretize(HouRedZone$game_seconds_remaining,
+                                              "frequency", breaks=200)
+HouRedZone$ydstogo<-as.factor(HouRedZone$ydstogo)
+
+set.seed(1234)
+ind <- sample(2, nrow(HouRedZone), replace = TRUE, prob = c(0.7, 0.3))
+train.data <- HouRedZone[ind == 1, ]
+test.data <- HouRedZone[ind == 2, ]
+
+NaiveModel<-naiveBayes(touchdown~., train.data)
+print(NaiveModel)
+```
+
+The breakdown above for each categorical variable shows how much weight the model puts onto each value in predicting a TD or non-TD play.
+
+For example, if the play is goal to go- the model predicts a TD on 64% of plays vs only 38% if it is not goal to go. Keep in mind this is only one variable factored into the overall prediction so the model will not actually predict a TD 64% of the time just based on goal to go. 
+
+```{r, warning=FALSE}
+table(predict(NaiveModel, train.data), train.data$touchdown)
+
+mosaicplot(table(predict(NaiveModel, train.data), train.data$touchdown), shade=TRUE)
+```
+
+The model created fits to 93% of its training data and correctly predicted 42/48 scores => 87.5%
+
+
+```{r, warning=FALSE}
+table(predict(NaiveModel, test.data), test.data$touchdown)
+```
+
+On the test data, the accuracy fell to 71.8%, meaning the LogReg Model is the stronger of the two for overall accuracy.
+
+It also predicted 8 out of 24 TD plays, maintaining the same 33.3% accuracy as the previous model.  
+
+###### Proceed to next tab by scrolling back to top of page
+
+
+## RZA- Jax RedZone Playcall Predictor
+
+### Neural Network- Predict Jacksonville's Redzone Playcall
+
+From the RedZone playcalling analysis, we know that this season Jacksonville has called 56.6% pass plays and 43.4% run plays.
+
+The goal here is to build a model that can more accurately predict their play call in the moment using a neural network. This may be a little more simplistic than the Random forest model run for 3rd down plays but should result in a greater accuracy by only having 2 predicted categories.  Once again: this model contains 3 years of data to ensure good sample size- want at least 100 obs. in the test set. 
+
+### Step 1. Pull Jax Red Zone Data
+```{r, warning=FALSE}
+JaxRedZone<- dbFetch(dbSendQuery(con, "SELECT game_seconds_remaining,
+                                yardline_100, down, ydstogo, shotgun,
+                                score_differential, goal_to_go, play_type
+                                FROM NFLDATA WHERE posteam='JAX' AND yardline_100<21 AND drive_inside20=1
+                                AND play_type IN ('run','pass')"))
+head(JaxRedZone)
+summary(JaxRedZone)
+```
+
+### Step 2. Data Preprocessing
+For NN, we need all numeric factors- including dummy variables in for "pass" and "run".
+
+Also must remove all NA's and leave even the categorical (binary) variables as numeric. 
+```{r, warning=FALSE}
+JaxRedZone$play_type<-as.factor((JaxRedZone$play_type))
+JaxRedZone$play_type<-unclass(JaxRedZone$play_type)
+JaxRedZone$play_type<- JaxRedZone$play_type - 1
+JaxRedZone[1:7]<-scale(JaxRedZone[1:7])
+JaxRedZone<-na.omit(JaxRedZone)
+```
+
+### Step 3. Build the Model
+
+This NN model was built several different times, testing different levels of hidden layers. The more layers added, the higher the training accuracy but the lower the test accuracy (overfitting to input data) so it remains at 2. 
+```{r, warning=FALSE}
+set.seed(12345)
+ind <- sample(2, nrow(JaxRedZone), replace = TRUE, prob = c(0.7, 0.3))
+train.data <- JaxRedZone[ind == 1, ]
+test.data <- JaxRedZone[ind == 2, ]
+nn<-neuralnet(formula = play_type~., 
+              data = train.data, hidden=2, err.fct="ce", linear.output = FALSE)
+
+plot(nn)
+```
+
+
+### Step 4. Assess based on Training Data
+```{r, warning=FALSE}
+mypredict<-compute(nn, nn$covariate)$net.result
+mypredict<-apply(mypredict, c(1), round)
+table(mypredict, train.data$play_type, dnn =c("Predicted", "Actual"))
+```
+
+The neural network built was accurate for 75.9% of the input data. Adding more hidden layers helped fit the model specifically to the training data (4 layers increased accuracy to 84.9%) but these models were then less accurate with new data. 
+
+### Step 5. Assess based on Test Data
+
+```{r, warning=FALSE}
+testPred <- compute(nn, test.data[, 0:7])$net.result
+testPred<-apply(testPred, c(1), round)
+table(testPred, test.data$play_type, dnn =c("Predicted", "Actual"))
+```
+
+The neural network model was able to correctly predict Jacksonville's redzone play calling 75.6% of the time- a huge improvememt over a blind 50/50 guess and also a major improvement over simply knowing Jacksonville's 57/43 play call split. By inputting a vector of known, live, in-game information into this model, it would output a next-play prediction of run or pass that we could be 75% confident in. 
+
+###### Proceed to next tab by scrolling back to top of page
+
+## MU- Hou WR vs. Jax Defense
+
+### Head to Head Matchup Expectations- Houston Offense
+
+Data for specific Head-to-Head Receiver to Defender Matchups was very limited in what was available for free to me. NFLfastR seemed to only list the defender on a passing play if they actually made a play on the ball and not just if they were the man on coverage. 
+To work around this, I used Pro Football Reference's Advanced Defensive stats in conjunction with Receiving Stats to come up with expected head to head completion % and yards per target by averaging the stats for each individual receiver with the stats for each individual defender in a heat map and think the results could highlight some potential strategies for our offense.
+Note: Some of these "matchups" are unrealistic, for example- a Linebacker will likely not be in coverage on Cooks or Collins. Also, the number of Offensive and Defensive Targets are included in the tabset for context. Focus: Just 2021 data 
+
+Expected usage of this: If an offensive assistant or receivers coach could have this printed or on a tablet (or QB studies pre-game)- he can look for hot matchups with each defensive set we see and be sure to exploit it. 
+
+### Expected Completion % Head to Head
+<iframe align = "center" width = "1000" height = "500" src="https://public.tableau.com/views/HoustonWRMatchups/CombinedComp?:language=en-US&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+The center for this heatmap is roughly 70% so any Comp% below 70% will be blue and any above will be red. At first glance, Chris Moore and Anthony Auclair seem like the hot receivers but for context, this data is based on only 15 and 4 targets respectively compared to Brandin Cooks' 109 targets and Nico Collins' 40. Similarly, Phillip Dorsett may appear cold but this is only on 3 receptions.
+
+Gameplan Takeaway- Emphasize the Slot and TE:
+
+While the heat map seems to show Jacksonville's top 3 CB's expected to be fairly effective against Cooks and Collins (although keep in mind this is still above 60% expected), being creative with the slot receivers would really exploit the weakness of Jacksonville's other backs. Both Wingard and Jenkins show comparativley low completion percentages as well so keeping the slot routes shallow should lead to consistent gains. 
+The heat map for our TE's points to a similar strategy- if we can keep them shallow and in linebacker coverage, we should expect consitent pickups, especially from Jordan Akins. 
+
+### Expected Yards/Target Head to Head
+<iframe align = "center" width = "1000" height = "500" src="https://public.tableau.com/views/HoustonWRMatchups2/CombinedYdsTarget?:language=en-US&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+This heatmap showcases a few additional pieces of strategy.
+
+* In conjunction with the other heatmap- more emphasis on utilizing the slots over the TE's for larger gains.
+* Cooks vs Campbell- Expected 8 yds/target with expected 65% completion% should lead to great production
+* Jacksonville's LBs may show high completion% against but do not expect big gains when targeting against them. 
+* Even though Josh Allen averaged a lower comp% against, if he ever drops in coverage, he is the most likely of the starting LBs to give up big yardage. 
+* If Chris Claybrooks is ever on the field- target him expecting a pickup of at least 9 yards regardless of the receiver. 
+* Same thing with Tre Herndon- expect at least 6 yards.
+
+###### Proceed to next tab by scrolling back to top of page
+## MU- Jax WR vs. Hou Defense
+
+### Head to Head Matchup Expectations- Jacksonville Offense
+
+With the pieces of insight gained for favorable matchups on offense, I also figured our defense would benefit by highlighting matchups that may give us problems on that end. Focus: Just 2021 data
+
+### Expected Completion % Head to Head 
+<iframe align = "center" width = "1000" height = "600" src="https://public.tableau.com/views/JaxWRMatchups/CombinedComp?:language=en-US&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+The above heatmap showcases a couple of weaknesses in our left side CB's King and Johnson which is fair since they are often matched up against top receivers. It appears Tavierre Thomas may have earned some more reps in place of these two (assuming comfortability on the left side of the field). It appears we can be fairly comfortable with our safety play but may need to gameplan around LBs who are not so great in coverage. Advanced Defense stats from my database was limited to just Kirksey and Grugier-Hill but if anyone further down the depth chart (Hewitt, Wallow, or Smith) show more comfortability and success in coverage, it may be worth upping their snap counts, particularly on passing downs. 
+
+### Expected Yds/Target Head To Head
+<iframe align = "center" width = "1000" height = "600" src="https://public.tableau.com/views/JaxWRMatchups2/CombinedYdsTgt?:language=en-US&:display_count=n&:origin=viz_share_link:showVizHome=no&:embed=true"></iframe>
+
+This second heatmap of Yds/Target helps ease our concerns on the left side a bit- despite the high completion percentage, the expected gain per target is comparatively low on King. However, there is a major concern on the left side if Johnson is in as Jacksonville should expect almost 10 yards any time they target against him. No major concerns in the Safety or Linebacker play in terms of Yds/Tgt. I beleive the secondary may want to lean on Terrance Mitchell and Tavierre Johnson more in this game and moving forward. 
+
+###### Proceed to next tab by scrolling back to top of page
+
+## Score Prediction
+
+### Week 15 Final Score Prediction
+
+To Estimate the final score for this matchup (and any matchup moving forward),I have compiled a dataset of all 2021 game scores accompanied by data I felt may be helpful in making a prediction- QBR, team rushing average, points scored per game (broken down by home or away), points allowed per game, offensive DVOA, defensive DVOA, divisional game, etc. 
+
+I then created two linear regression models- one that outputs the home team score and one to output the away team.
+
+### Home Team Score Predictor:
+
+### Dataset
+```{r, wanring=FALSE}
+df<-read.csv(file="ScorePredictionData.csv", head=TRUE, sep=",")
+head(df,5)
+set.seed(1234)
+ind <- sample(2, nrow(df), replace = TRUE, prob = c(0.7, 0.3))
+train.data <- df [ind == 1, ]
+test.data <- df [ind == 2, ]
+```
+
+### Select key variables for formula
+```{r, wanring=FALSE}
+myForm<-total_home_score~home_Off_DVOA+
+  away_Def_DVOA+AvgHomePts+AwayDefPPG+home_rushperg+home_qbr+DVOADiff_AO_HD
+ScorePredH<-lm(myForm, data=train.data)
+```
+
+### View the Model
+```{r, wanring=FALSE}
+summary(ScorePredH)
+```
+The above coefficients show the levles at whcih this model factors in the 7 input values in predicting the home teams score. It also shows a relatively low r-squared value.  
+
+### Predictions vs. Observed
+```{r, wanring=FALSE}
+Pred<-predict(ScorePredH, newdata=test.data)
+
+plot(test.data$total_home_score, Pred, xlab="observed", ylab="Predicted")
+abline(a=0, b=1)
+```
+Using the test data shows decent strength to the model as the data does for the most part cluster around the line with a few points showing high residuals. 
+
+### Simplify and Improve with Minimal Adequate Model
+
+Using the minimal adequate model, I will eliminate some of the variables that do not show significance and improve the estimation funcion. 
+```{r, wanring=FALSE}
+ScorePred2<-step(ScorePredH, direction="backward")
+summary(ScorePred2)
+Pred2<-predict(ScorePred2, newdata=test.data)
+plot(test.data$total_home_score, Pred2, xlab="observed", ylab="Predicted")
+abline(a=0,b=1)
+```
+
+This output both increases the r-squared and decreases the residual standar error, improving the model strength. It has reduced the model to only utilizing 3 input variables. 
+
+The equation reads:
+
+#### HomeTeamScore = .1859(AwayDefenseDVOA) + .8775(HomeOffPPG)+.849(AwayDefPPG) – 15.9549
+
+
+### Away Team Score Predictor:
+
+Repeating the same steps for the away team formula. 
+
+### Select Key Variables for Formula
+```{r, wanring=FALSE}
+myForm2<- total_away_score~away_qbr+away_rushperg+home_Def_DVOA+
+  HomeDefPPG+AvgAwayPts+div_game+Veg_away+spread_line+DVOADiff_AO_HD
+ScorePredA<- lm(myForm2, data=train.data)
+```
+
+### View the Model
+```{r, wanring=FALSE}
+summary(ScorePredA)
+```
+
+### Simplify and Improve- changing variables
+
+Trying the minimal adequate model did imrove the standard residual error but decreased the r-squared value. After experimenting with other variables- the strongest model comes from the following combination of input variables
+
+```{r, wanring=FALSE}
+ScorePredA2<-lm(total_away_score~home_Def_DVOA+HomeDefPPG+AvgAwayPts, data=train.data)
+summary(ScorePredA2)
+
+Pred3<- predict(ScorePredA2, newdata=test.data)
+plot(test.data$total_home_score, Pred3, xlab="observed", ylab="Predicted")
+abline(a=0,b=1)
+```
+
+The shape of this graph brings a bit more skepticism than the home team score based on some far off outliers, but looks to be adequate for the central cluster of the data. 
+
+The equation reads:
+
+#### AwayTeamScore = .981(AwayOffPPG) + .9677(HomeDefPPG) - .1047 (HomeDefDVOA) - 22.6768
+
+### The Prediction
+Note: For our Away PPG I recalculated dismissing the Bills game as an outlier. 
+
+Jacksonville (Home): .1859(-3.9) + .8775(14)+ .849(27.4) – 15.9549 = 18.86 -> Round to 20 (likelier FB score)
+
+Houston (Away) = .981(14.6) + .9677(26.2) - .1047(11.9) - 22.6768 = 15.75 -> Round to 17 (likelier FB score)
+
+#### Based on my model, it appears the home field advantage helps Jacksonville edge us out: 20-17 (though I hope to be wrong!)
+
+
+
+
+### WHAT IF: Flipping the home field advantage in our favor-
+
+Houston (Hypothetically Home) = .1859(11.9) + .8775(16.7)+.849(26.2) – 15.9549 = 23.58 -> Round to 24
+
+Jacksonville (Hypothetically Away) = .981(13.7) + .9677(27.4) - .1047 (-3.9) - 22.6768 = 17.68 -> Round to 17
+
+If we were at home, this model would expect us to win. Averaging just 10 points in our away games (teased up to 14.6 by excluding the Bills game) is the biggest reason this model projects us to lose.  
+
+### End of Analysis
