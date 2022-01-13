@@ -1,0 +1,258 @@
+---
+title: "Rays R&D Internship Project"
+author: "David Hannon"
+date: "11/1/2021"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+theme: cayman
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Results {.tabset}
+## Packages Used
+Import the data and installation of plyr, dplyr, tidyr, and ggplot2 packages
+```{r, message=FALSE, warning=FALSE}
+setwd("C:/Datasets")
+df<-read.csv(file="battedBallData.csv", head=TRUE, sep=",")
+library("plyr")
+library("dplyr")
+library("tidyr")
+library("ggplot2")
+```
+
+
+## STEP 1: Analysis of Systems
+### Analyzing Exit Velocity Measurements
+```{r, warning=FALSE}
+#Overview of System A's speed-off-bat observations
+summary(df$speed_A)
+#Overview of System B's speed-off-bat observations
+summary(df$speed_B)
+```
+
+```{r,warning=FALSE}
+#Boxplot comparison of System A and System B's speed-off-bat observations
+df %>% select(speed_A, speed_B) %>%
+  pivot_longer(., cols = c(speed_A, speed_B), names_to = "Var", values_to = "Val") %>%
+  ggplot(aes(x = Var, y = Val)) +
+  geom_boxplot(color="navy blue", fill="turquoise2")+
+  ggtitle("System A vs System B: Exit Velocity")
+```
+
+Observations:
+
+* System A’s overall distribution is placed higher than System B’s perhaps implying that System A slightly overestimates Exit Velocity while System B may underestimate
+* The lower quartile for System B as well as the low outliers are so much lower than System A’s lowest observations, perhaps suggesting that System A is unable to record off-bat speeds below a certain threshold so things like bunts may be getting recorded as NA (which may not be a bad thing in calculating a player’s true average exit velocity)
+
+### Analyzing Launch Angle Measurements
+```{r, warning=FALSE}
+#Overview of System A's launch angle observations
+summary(df$vangle_A)
+#Overview of System B's launch angle observations
+summary(df$vangle_B)
+#Boxplot comparison of System A and System B's launch angle observations
+df %>% select(vangle_A, vangle_B) %>%
+  pivot_longer(., cols = c(vangle_A, vangle_B), names_to = "Var", values_to = "Val") %>%
+  ggplot(aes(x = Var, y = Val)) +
+  geom_boxplot(color="navy blue", fill="turquoise2")+
+  ggtitle("System A vs System B: Launch Angle")
+```
+
+Observations:
+
+* The measures of center are roughly the same for both measurement systems, as well as the quartile boundaries
+* System B has a slightly larger range of launch angles, showcasing both high and low outliers while System A is mainly showing low outliers- this may suggest a fault in System A being able to record balls that are almost popped straight into the air
+
+### Investigation of Pop-Ups
+```{r}
+df.popups<- subset(df, df$hittype=="popup")
+summary(df.popups$vangle_A)
+```
+A subset of the data was taken just for hit types of “popup” to showcase a "quirk" of system A- out of 5,246 total batted balls labelled as popups within the original data, system A reported NA measurements for 2,446 or 46% of all popup observations
+
+### Check for relationship between Exit Velocity and Launch Angle
+```{r, warning=FALSE}
+#System A
+ggplot(df, aes(x=speed_A, y=vangle_A, group=hittype))+
+  geom_point(aes(color=hittype))+
+  ggtitle("System A: Relationship between Exit Velocity and Launch Angle")
+#System B
+ggplot(df, aes(x=speed_B, y=vangle_B, group=hittype))+
+  geom_point(aes(color=hittype))+
+  ggtitle("System B: Relationship between Exit Velocity and Launch Angle")
+```
+
+Observations:
+
+* System A's scatterplot reveals no obvious relationship other than hittype corresponding with appropriate launch angles
+* System A's scatterplot does showcase a "flyball" observation with a launch angle around -40 degrees though suggesting either a problem in System A's angle measurementor human error in labelling the batted-ball type
+* System B's scatterplot shows a gap in low velocity hits with launch angles close to 0 as well as some sparcity of low velocity hits with high launch angles
+* Neither scatterplot gives much suggestion of a need to integrate Launch Angle into calculating each batter's ture exit velocity
+
+### Investigation of Case-by-Case differences between A and B
+```{r, warning=FALSE}
+#New variable for difference of exit velocity measurements, A-B
+df$speed_diff<- df$speed_A-df$speed_B
+#New variable for difference of launch angle measurements, A-B
+df$vangle_diff <- df$vangle_A-df$vangle_B
+
+#Check if large discrepancies in Exit Velocity Recorded are associated with large differences in Launch Angle Recorded
+ggplot(df, aes(x=speed_diff, y=vangle_diff, group=hittype))+
+  geom_point(aes(color=hittype))+
+  ggtitle("Relationship between Exit Velocity Diff. and Launch Angle Diff.")
+```
+Observations:
+
+* For this scatterplot, seeing data in the corners would be a bad thing, showing that the same observations show discrepancies in both exit velocity and launch angle
+* There is a bit of a group in the bottom right corner showing ground balls in which vangle_B>vangle_A but speed_A>speed_B
+* This may showcase a problem with System B overestimating launch angles since these should be ground balls with low launch angles
+* Many of these will be removed when we remove outliers for speed_diff
+
+```{r, warning=FALSE}
+#Overview of the calculated difference in recorded exit velocity (A-B)
+summary(df$speed_diff)
+ggplot(df, aes(x="speed_diff", y=speed_diff))+
+  geom_boxplot(color="navy blue", fill="turquoise2")+
+  ggtitle("Difference in Exit Velocity Recorded: A - B")
+```
+
+Observations:
+
+* The distribution for the difference of speed_A – speed_B confirms that System A tends to record higher speeds than System B with over 75% of the observations yielding a positive difference
+* While my initial plan was to give stronger weight to observations in which speed_A=speed_B (or close to it), this distribution suggests that these machines may be producing their most consistent/accurate outputs when speed_A is recorded at slightly higher than speed_B.
+* The max and min, as well as the boxplot for the speed_diff variable is concerning as there are clearly a lot of observations marked as outliers with the recorded velocity difference between System A and System B being greater than 11.081 or less than -1.319 (calculated using the 1.5 x IQR rule)
+  + For System A to record a velocity over 11 mph greater than System B is striking and so this new variable will be used to trim the dataset. However, System B recording a velocity only 1.319 mph greater than System A is not as striking since the system’s do almost agree in this case- despite expecting a higher reading from system A. 
+  + Using -1.319 as a lower bound of speed_diff (with 11.081 as the upper limit) keeps 58,003 observations compared to 58,420 when -11.081 is used, thus I decided to used ±11.081 as the cutoffs for speed_diff to maintain these few observations in which System B seems to have overestimated. 
+* There are clearly some major discrepancies between the systems in recording launch angle since at least one observation shows a difference of 126.844 degrees, however since estimating exit velocity is the goal of this analysis and no apparent relationship was present between Exit Velocity and Launch Angle, the dataset will not be truncated based on this variable.
+
+###### Proceed to next tab by scrolling back to top of page
+
+## STEP 2: Data Cleansing
+Rationale: The two main problems to address are the observations with data from only one of System A or B and the observations in which System A and B have a significant disagreement over the exit velocity.
+
+### Imputing
+Adressing observations with only one observation from System A or B.
+Create a copy of df with missing A's imputed by missing B's, vice versa since we will essentially have to believe whichever system recorded a speed in these cases
+```{r}
+#Create a copy called df2 to work with
+df2<-df
+#Impute speed_B for missing speed_A's
+df2$speed_A[is.na(df2$speed_A)]<-df2$speed_B[is.na(df2$speed_A)]
+#Impute speed_A for missing speed_B's
+df2$speed_B[is.na(df2$speed_B)]<-df2$speed_A[is.na(df2$speed_B)]
+#Impute vangle_B for missing vangle_A's
+df2$vangle_A[is.na(df2$vangle_A)]<-df2$vangle_B[is.na(df2$vangle_A)]
+#Impute vangle_A for missing vangle_B's
+df2$vangle_B[is.na(df2$vangle_B)]<-df2$vangle_A[is.na(df2$vangle_B)]
+#Recalculate speed_diff now with less NA
+df2$speed_diff<- df2$speed_A-df2$speed_B
+#Recalculate vangle_diff with less NA
+df2$vangle_diff <- df2$vangle_A-df2$vangle_B
+```
+
+### Omit remaining NA values
+Any remaining NA within df2 must have NA input from both System A and System B- These will be omitted
+```{r}
+df2<-na.omit(df2)
+```
+
+Check how many unique batters were removed due to a lack of data
+```{r}
+n_distinct(df$batter)
+n_distinct(df2$batter)
+```
+Two batters were lost, however this means these batters had no recorded values for any of their batted balls and so an estimate cannot be made
+
+### Removing Outliers
+Adressing the observations in which System A and B vastly disagree.
+Using the window of plus/minus 11.081 as the acceptable window for disagreement between systems A and B
+```{r}
+df.trimmed<- subset(df2, df2$speed_diff<=11.081 & df2$speed_diff>=-11.081)
+summary(df.trimmed)
+```
+The above summary shows that the new data frame, contains no NA values, 58,224 observations, and that speed_A and speed_B have similar distributions now that the outliers are removed (with speed_A still slightly larger than speed_B for each part of the 5 number summary)
+```{r}
+ggplot(df.trimmed, aes(x="speed_diff", y=speed_diff))+
+  geom_boxplot(color="navy blue", fill="turquoise2")+
+  ggtitle("Trimmed: Difference in Launch Angle: A - B")
+```
+The boxplot shows how the spread has been reduced- some outliers do still remain but not to the extrme extent as previously seen
+```{r}
+ggplot(df.trimmed, aes(x=speed_diff, y=vangle_diff, group=hittype))+
+  geom_point(aes(color=hittype))+
+  ggtitle("Trimmed: Relationship between Exit Velocity Diff. and Launch Angle Diff.")
+```
+The scatterplot shows that some extreme outliers do still remain for the differences in launch angle, however the associated exit velocity differences are randonly spread so these outliers should not effect our average calculation.
+### Ensuring we do not lose batters
+Check for loss of Unique Batters
+```{r}
+n_distinct(df2$batter)
+n_distinct(df.trimmed$batter)
+```
+It appears 24 batters did not have any "good" data.
+
+We will create a dataframe of JUST these missing batters so that we can still get ~some kind of estimate~ for them later on, even though we should not be so confident in it. 
+```{r}
+df.outliers<- subset(df2, !(batter%in%df.trimmed$batter))
+n_distinct(df.outliers$batter)
+```
+###### Proceed to next tab by scrolling back to top of page
+
+## STEP 3: Calculate Averages/Player
+Rationale: Since it is believed System A is more accurate, it is given double weight in the average calculation.
+To account for the imputation done and the discrepancies between some System A and B observations, a confidence interval will be added. 
+```{r}
+df.trimmed$average_speed<-((df.trimmed$speed_A+df.trimmed$speed_A+df.trimmed$speed_B)/3)
+summary(df.trimmed$average_speed)
+```
+Aggregate average exit velocity, count of batted balls, and standard deviation for each player
+N is important to be included to give context about the estimates
+```{r}
+Batter_Average<- ddply(df.trimmed, .(batter), summarize, 
+                       AverageExitVelo=mean(average_speed), 
+                       N=length(batter), 
+                       sd= sd(average_speed))
+```
+Add a 95% Confidence Interval around the estimate to account for n and sd. Whenever N=1, we will use the calculated sd of all batters to give a generous bound to the CI. 
+```{r, warning=FALSE}
+#Add Confidence Interval Lower Bound
+Batter_Average$CI95_L<- ifelse(Batter_Average$N > 2,
+  Batter_Average$AverageExitVelo - (qt(0.975, df=(Batter_Average$N-1))*(Batter_Average$sd)/sqrt(Batter_Average$N)),
+  Batter_Average$AverageExitVelo - (qnorm(.975))*9.778126/sqrt(Batter_Average$N))
+#Add Confidence Interval Upper Bound
+Batter_Average$CI95_U<- ifelse(Batter_Average$N > 2,
+  Batter_Average$AverageExitVelo + (qt(0.975, df=(Batter_Average$N-1))*(Batter_Average$sd)/sqrt(Batter_Average$N)),
+  Batter_Average$AverageExitVelo + (qnorm(.975))*9.778126/sqrt(Batter_Average$N))
+```
+Revision: Initially the ifelse statement was set for N>1. This led to some lower bounds being impossible exit velocities
+
+###### Proceed to next tab by scrolling back to top of page
+
+## Final Table
+Final Table of Estimates:
+```{r}
+Batter_Average
+```
+
+## Conclusions
+```{r}
+mean(Batter_Average$AverageExitVelo)
+mean(Batter_Average$CI95_L)
+mean(Batter_Average$CI95_U)
+```
+The average "true" exit velocity for all batters is `r mean(Batter_Average$AverageExitVelo)`
+The average upper and lower bounds for the 95% confidence interval are also shown above to give an idea of the margin of error for each batter. Due to varying sample sizes for each batter, some estimates we can be much more confident in than others. For batters with anywhere from 1-5 batted balls recorded, these estimates should be taken with a grain of salt and the size of their corresponding confidence interval sould reflect that: however the process used ensured that between the "Final Table" and the "Additional Table", we do have some type of estimate for all but 2 batters who had no recorded data whatsoever. As this dataset updates with more observations for each batter, this same exact process can be replicated to improve estimates.  
+###### Proceed to next tab by scrolling back to top of page
+
+## Additional Table
+Quick calculation of estimated average for other 24 players:
+Note- These estimates have low confidence due to small sample sizes and extreme disagreement from System A and B in measuring Exit Velocity
+```{r}
+df.outliers$average_speed<-((df.outliers$speed_A+df.outliers$speed_A+df.outliers$speed_B)/3)
+Outlier_Averages<-ddply(df.outliers, .(batter), summarize, AverageExitVelo=mean(average_speed), N=length(batter))
+Outlier_Averages
+```
